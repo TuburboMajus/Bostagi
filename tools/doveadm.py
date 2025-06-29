@@ -244,6 +244,10 @@ class Doveadm(object):
                 stderr=subprocess.STDOUT,
                 text=True
             )
+            try:
+                subprocess.check_call(['sudo', 'systemctl','restart','dovecot','postfix'])
+            except:
+                pass
 
             print(f"User '{username}' added successfully.")
             return True

@@ -20,11 +20,19 @@
                         <div class="flex-grow-1">
                             <div class="email-sender">&lt;{{email.address}}&gt;</div>
                         </div>
+                        {% if email.name in immutable_mails%}
+                        <div class="d-flex flex-column align-items-end">
+                            <button class="btn btn-sm btn-outline-secondary reset-password-btn" onclick="reset_immutable_password(this)" data-email="{{email.name}}">
+                                <i class="fas fa-key me-1"></i>Réinitialiser le mot de passe
+                            </button>
+                        </div>
+                        {% else %}
                         <div class="d-flex flex-column align-items-end">
                             <button class="btn btn-sm btn-outline-secondary reset-password-btn" onclick="reset_password(this)" data-email="{{email.name}}">
                                 <i class="fas fa-key me-1"></i>Réinitialiser le mot de passe
                             </button>
                         </div>
+                        {% endif %}
                     </div>
                     {% endfor %}
                 {% else %}
@@ -112,6 +120,24 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                 <button type="button" class="btn btn-primary" id="submitResetPasswordBtn">Réinitialiser</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de réinitialisation du mot de passe -->
+<div class="modal fade" id="resetImmutablePasswordModal" tabindex="-1" aria-labelledby="resetImmutablePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resetImmutablePasswordModalLabel"><i class="fas fa-exclamation-triangle"></i>&nbsp;Réinitialisation Impossible</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <p>Cette adresse email est immuable</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
             </div>
         </div>
     </div>

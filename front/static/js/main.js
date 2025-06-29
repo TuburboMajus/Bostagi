@@ -2,9 +2,15 @@ const main_js_dictionary = {}
 
 function reset_password(btn){
     const modal = new bootstrap.Modal(document.getElementById('resetPasswordModal'));
-    document.getElementById('newPasswordUsername').value = btn.data.email;
+    document.getElementById('newPasswordUsername').value = btn.dataset.email;
     modal.show();
 }
+
+function reset_immutable_password(btn){
+    const modal = new bootstrap.Modal(document.getElementById('resetImmutablePasswordModal'));
+    modal.show();
+}
+
 
 function load_main_js_dictionnary(language){
     return new Promise((r,e) => {
@@ -151,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('newPasswordUsername').name = "username"
             document.getElementById('newPassword').name = "password"
             document.getElementById('confirmNewPassword').name = "confirmPassword"
-            emailForm.submit();
+            resetPasswordForm.submit();
         }
     });
 });

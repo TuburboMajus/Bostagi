@@ -22,6 +22,7 @@ import json
 email_manager_blueprint = MultiLanguageBlueprint('email_manager',__name__, load_in_g=True, default_config={
 	"templates_folder":"{language}/email_manager",
 	"emails_per_page":50,
+	"immutable_mails":[]
 }, dictionnary_selector=lambda lg:lg['code'])
 
 
@@ -30,12 +31,14 @@ email_manager_blueprint = MultiLanguageBlueprint('email_manager',__name__, load_
 @email_manager_blueprint.with_dictionnary
 def listEmails():
 	data = list(Doveadm(current_app.config['domain_name']).list_dovecot_users())
+	immutable_mails = email_manager_blueprint.get_configuration('immutable_mails')
+	print(immutable_mails)
 	if request.args.get('fmt','html') == 'html':
 		return NormalUserTemplate(
 			Path(email_manager_blueprint.configuration["templates_folder"].format(language=g.language['code'])).joinpath("list.html"),
-			emails=data
+			emails=data, immutable_mails=immutable_mails
 		).handles_success_and_error().with_dictionnary().with_sidebar("emails").with_navbar().render()
-	return {"status":"ok","data":[email.to_dict() for email in data]}
+	return {"status":"ok","data":[email.to_dict(**{"immutable":(email.name in immutable_mails)}) for email in data]}
 
 
 @email_manager_blueprint.route('/email',methods=["POST"])
@@ -52,7 +55,7 @@ def createEmail(form):
 
 	Doveadm(current_app.config['domain_name']).generate_new_mailbox(new_box, form['password'])
 
-	return redirect(url_for("emails.listEmails"))
+	return redirect(url_for("email_manager.listEmails"))
 
 
 @email_manager_blueprint.route('/reset_password',methods=["POST"])
@@ -63,10 +66,10 @@ def resetEmailPassword(form):
 	assert(form['password'] == form['confirmPassword'])
 
 	try:
-		mailbox = [email.to_dict() for email in Doveadm(current_app.config['domain_name']).list_dovecot_users() if email['name'] == form['username']][0]
-		Doveadm(current_app.config['domain_name']).generate_new_mailbox(mailbox, form['password'])
+		mailbox = [email for email in Doveadm(current_app.config['domain_name']).list_dovecot_users() if email.name == form['username']][0]
+		Doveadm(current_app.config['domain_name']).reset_mailbox_password(mailbox, form['password'])
 	except:
 		pass
 
-	return redirect(url_for("emails.listEmails"))
+	return redirect(url_for("email_manager.listEmails"))
 
