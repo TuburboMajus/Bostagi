@@ -1,0 +1,13 @@
+<div class="sidebar" dir="rtl">
+    <button type="button" class="btn btn-secondary" onclick="window.location.href = '/logout'">تسجيل الخروج</button>
+    <hr>
+    <div class="sidebar-label">إعدادات اللغة</div>
+    <select class="form-select mb-3" id="languageSelect">
+        <option value="{{language['code']}}">{{language['name']}}</option>
+        {% for slanguage in languages %}
+          {% if slanguage['code'] != language['code'] %}
+          <option value="{{slanguage['code']}}">{{slanguage['name']}}</option>
+          {% endif %}
+        {% endfor %}
+    </select>
+</div>

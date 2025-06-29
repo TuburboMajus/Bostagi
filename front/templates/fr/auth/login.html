@@ -1,0 +1,100 @@
+{% extends "common/layouts/fullscreen.html" %}
+
+{% block content %}
+<div class="page-inner">
+  <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card card-round" style="background-image:url(/static/img/login.jpg); background-size: cover;">
+        
+        {% if error is defined and error is not none %}
+        <div class="card-header">
+          <div class="card-title">
+            <div class="row justify-content-center">
+              <div class="col-md-12"> 
+                <h3 align="center" style="color: red; background-color: #f3d2d2; border-radius: 5px;">{{error}}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        
+        {% if success is defined and success is not none %}
+        <div class="card-header">
+          <div class="card-title">
+            <div class="row justify-content-center">
+              <div class="col-md-12"> 
+                <h3 align="center" style="green: red; background-color: #f3d2d2; border-radius: 5px;">{{success}}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        
+        <div class="card-header">
+          <div class="card-title">
+            <div class="row justify-content-between">
+              <div class="col-md-4"> 
+                <h1 align="center">Connexion</h1>
+              </div>
+              <div class="col-md-6"> 
+                <select class="form-control" onchange="reloadWithLanguage(this.value)">
+                    <option value="fr" selected>Français</option>
+                  {% for language in languages %}
+                    {% if language['code'] != "fr" %}
+                    <option value="{{language['code']}}">{{language['name']}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form method="post">
+            <div class="row justify-content-center">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="text" class="form-control" placeholder="Email" value="" name="username">
+                </div>
+              </div>
+            </div>
+
+            <div class="row justify-content-center">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Mot de passe</label>
+                  <input type="password" class="form-control" placeholder="Mot de passe" name="password">
+                </div>
+              </div>
+            </div>
+
+            <hr>
+
+
+            <div class="row justify-content-center">
+              <div class="col-md-6 pr-1">
+                  <div class="row update">
+                      <div class="col-md-12" align="center">
+                        <button type="submit" class="btn btn-success btn-round">Connexion</button> 
+                      </div>
+                  </div>
+                  <div class="row update">
+                      <div class="col-md-12" align="center">
+                        <label class="checkbox"><input type="checkbox" name="remember">se souvenir de moi</label>
+                      </div>
+                  </div>
+              </div>
+            </div>
+
+            <hr>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

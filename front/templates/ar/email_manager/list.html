@@ -1,0 +1,125 @@
+{% extends 'common/layouts/sidebared-rtl.html' %}
+
+{% block content %}
+<div class="row mb-4" dir="rtl">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">صندوق البريد</h2>
+        <button class="btn btn-primary add-email-btn" data-bs-toggle="modal" data-bs-target="#addEmailModal">
+            <i class="fas fa-plus me-2"></i>إضافة بريد إلكتروني جديد
+        </button>
+    </div>
+</div>
+
+<div class="row" dir="rtl">
+    <div class="col-12">
+        <div class="mailbox-container">
+            <div id="emailList" class="list-group">
+                {% if emails | length > 0 %}
+                    {% for email in emails %}
+                    <div class="email-item d-flex justify-content-between">
+                        <div class="flex-grow-1">
+                            <div class="email-sender">&lt;{{email['address']}}&gt;</div>
+                        </div>
+                        <div class="d-flex flex-column align-items-end">
+                            <button class="btn btn-sm btn-outline-secondary reset-password-btn" onclick="reset_password(this)" data-email="{{email['name']}}">
+                                <i class="fas fa-key me-1"></i>إعادة تعيين كلمة المرور
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <!-- Sample emails will be loaded here -->
+                <div class="no-emails text-center">
+                    <i class="far fa-envelope fa-3x mb-3"></i>
+                    <h4>لا توجد رسائل بريدية</h4>
+                    <p>انقر على "إضافة بريد إلكتروني جديد" للبدء</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Email Modal -->
+<div class="modal fade" id="addEmailModal" tabindex="-1" aria-labelledby="addEmailModalLabel" aria-hidden="true" dir="rtl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEmailModalLabel">إضافة بريد إلكتروني جديد</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+            </div>
+            <div class="modal-body">
+                <form id="emailForm" method="post" action="/email" novalidate>
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">الاسم الأول <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="firstName" required>
+                        <div id="firstNameError" class="form-error text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">الاسم الأخير</label>
+                        <input type="text" class="form-control" id="lastName">
+                        <div id="lastNameError" class="form-error text-danger"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">كلمة المرور <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="password" required>
+                        <div id="passwordError" class="form-error text-danger"></div>
+                        <div class="password-meter mt-2">
+                            <div id="passwordStrength" class="password-meter-fill"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">تأكيد كلمة المرور <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="confirmPassword" required>
+                        <div id="confirmPasswordError" class="form-error text-danger"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn btn-primary" id="submitEmailBtn">إضافة البريد</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reset Password Modal -->
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true" dir="rtl">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resetPasswordModalLabel">إعادة تعيين كلمة المرور</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+            </div>
+            <div class="modal-body">
+                <form id="resetPasswordForm" novalidate>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">كلمة المرور الجديدة <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="newPassword" required>
+                        <div id="newPasswordError" class="form-error text-danger"></div>
+                        <div class="password-meter mt-2">
+                            <div id="newPasswordStrength" class="password-meter-fill"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmNewPassword" class="form-label">تأكيد كلمة المرور الجديدة <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="confirmNewPassword" required>
+                        <div id="confirmNewPasswordError" class="form-error text-danger"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn btn-primary" id="submitResetPasswordBtn">إعادة تعيين</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/main.js"></script>
+<script type="text/javascript">
+    load_main_js_dictionnary("ar").then(()=>{console.log("main js dict loaded")});
+</script>
+{% endblock %}
