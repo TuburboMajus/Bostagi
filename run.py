@@ -93,6 +93,15 @@ def build_app(**app_configuration):
     app.register_blueprint(blueprints.email_manager_blueprint.setup(config['app'].get('blueprints',{}).get("email_manager",{})))
     app.register_blueprint(blueprints.auth_blueprint.setup(auth_blueprint_config))
 
+    # ** Section ** AppMainRoutes
+    @app.route('/', methods=['GET'])
+    @login_required
+    def home():
+        if current_user.is_anonymous:
+            return redirect(url_for("auth.login"))
+        return redirect(url_for('email_manager.listEmails'))
+    # ** EndSection ** AppMainRoutes
+
     return app
 
 # ** EndSection ** AppCreation
