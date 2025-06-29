@@ -1,7 +1,10 @@
 <div class="sidebar" dir="rtl">
     <button type="button" class="btn btn-secondary" onclick="window.location.href = '/logout'">تسجيل الخروج</button>
     <hr>
-    <div class="sidebar-label">إعدادات اللغة</div>
+    <div class="sidebar-label" dir="rtl">الدروس التعليمية</div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#explainThunderbirdModal" dir="rtl">ربط مع ثندربرد</button>
+    <hr>
+    <div class="sidebar-label" dir="rtl">إعدادات اللغة</div>
     <select class="form-select mb-3" id="languageSelect">
         <option value="{{language['code']}}">{{language['name']}}</option>
         {% for slanguage in languages %}

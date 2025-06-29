@@ -48,100 +48,11 @@
     </div>
 </div>
 
-<!-- Add Email Modal -->
-<div class="modal fade" id="addEmailModal" tabindex="-1" aria-labelledby="addEmailModalLabel" aria-hidden="true" dir="rtl">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addEmailModalLabel">إضافة بريد إلكتروني جديد</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
-            </div>
-            <div class="modal-body">
-                <form id="emailForm" method="post" action="/email" novalidate>
-                    <div class="mb-3">
-                        <label for="firstName" class="form-label">الاسم الأول <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="firstName" required>
-                        <div id="firstNameError" class="form-error text-danger"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="lastName" class="form-label">الاسم الأخير</label>
-                        <input type="text" class="form-control" id="lastName">
-                        <div id="lastNameError" class="form-error text-danger"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">كلمة المرور <span class="text-danger">*</span></label>
-                        <input type="password" class="form-control" id="password" required>
-                        <div id="passwordError" class="form-error text-danger"></div>
-                        <div class="password-meter mt-2">
-                            <div id="passwordStrength" class="password-meter-fill"></div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="confirmPassword" class="form-label">تأكيد كلمة المرور <span class="text-danger">*</span></label>
-                        <input type="password" class="form-control" id="confirmPassword" required>
-                        <div id="confirmPasswordError" class="form-error text-danger"></div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
-                <button type="button" class="btn btn-primary" id="submitEmailBtn">إضافة البريد</button>
-            </div>
-        </div>
-    </div>
-</div>
+{% include "ar/email_manager/dialogs/addEmail.html" %}
+{% include "ar/email_manager/dialogs/resetPassword.html" %}
+{% include "ar/email_manager/dialogs/resetImmutablePassword.html" %}
 
-<!-- Reset Password Modal -->
-<div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true" dir="rtl">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="resetPasswordModalLabel">إعادة تعيين كلمة المرور</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
-            </div>
-            <div class="modal-body">
-                <form id="resetPasswordForm" method="post" action="/reset_password" novalidate>
-                    <input type="hidden" id="newPasswordUsername">
-                    <div class="mb-3">
-                        <label for="newPassword" class="form-label">كلمة المرور الجديدة <span class="text-danger">*</span></label>
-                        <input type="password" class="form-control" id="newPassword" required>
-                        <div id="newPasswordError" class="form-error text-danger"></div>
-                        <div class="password-meter mt-2">
-                            <div id="newPasswordStrength" class="password-meter-fill"></div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="confirmNewPassword" class="form-label">تأكيد كلمة المرور الجديدة <span class="text-danger">*</span></label>
-                        <input type="password" class="form-control" id="confirmNewPassword" required>
-                        <div id="confirmNewPasswordError" class="form-error text-danger"></div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
-                <button type="button" class="btn btn-primary" id="submitResetPasswordBtn">إعادة تعيين</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- نافذة إعادة تعيين كلمة المرور -->
-<div class="modal fade" id="resetImmutablePasswordModal" tabindex="-1" aria-labelledby="resetImmutablePasswordModalLabel" aria-hidden="true" dir="rtl">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="resetImmutablePasswordModalLabel"><i class="fas fa-exclamation-triangle"></i>&nbsp;إعادة التعيين غير ممكنة</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
-            </div>
-            <div class="modal-body">
-                <p>عنوان البريد الإلكتروني هذا ثابت ولا يمكن تغييره</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
-            </div>
-        </div>
-    </div>
-</div>
+{% include "ar/email_manager/dialogs/explainThunderbird.html" %}
 {% endblock %}
 
 {% block scripts %}

@@ -1,0 +1,42 @@
+<!-- Add Email Modal -->
+<div class="modal fade" id="addEmailModal" tabindex="-1" aria-labelledby="addEmailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEmailModalLabel">Ajouter un email</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <form id="emailForm" method="post" action="/email" novalidate>
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">Prénom <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="firstName" required>
+                        <div id="firstNameError" class="form-error"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="lastName">
+                        <div id="lastNameError" class="form-error"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Mot de passe <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="password" required>
+                        <div id="passwordError" class="form-error"></div>
+                        <div class="password-meter">
+                            <div id="passwordStrength" class="password-meter-fill"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirmer le mot de passe <span class="text-danger">*</span></label>
+                        <input type="password" class="form-control" id="confirmPassword" required>
+                        <div id="confirmPasswordError" class="form-error"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-primary" id="submitEmailBtn">Ajouter</button>
+            </div>
+        </div>
+    </div>
+</div>
