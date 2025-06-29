@@ -18,10 +18,10 @@
                     {% for email in emails %}
                     <div class="email-item d-flex justify-content-between">
                         <div class="flex-grow-1">
-                            <div class="email-sender">&lt;{{email['address']}}&gt;</div>
+                            <div class="email-sender">&lt;{{email.address}}&gt;</div>
                         </div>
                         <div class="d-flex flex-column align-items-end">
-                            <button class="btn btn-sm btn-outline-secondary reset-password-btn" onclick="reset_password(this)" data-email="{{email['name']}}">
+                            <button class="btn btn-sm btn-outline-secondary reset-password-btn" onclick="reset_password(this)" data-email="{{email.name}}">
                                 <i class="fas fa-key me-1"></i>إعادة تعيين كلمة المرور
                             </button>
                         </div>
@@ -92,7 +92,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
             </div>
             <div class="modal-body">
-                <form id="resetPasswordForm" novalidate>
+                <form id="resetPasswordForm" method="post" action="/reset_password" novalidate>
+                    <input type="hidden" id="newPasswordUsername">
                     <div class="mb-3">
                         <label for="newPassword" class="form-label">كلمة المرور الجديدة <span class="text-danger">*</span></label>
                         <input type="password" class="form-control" id="newPassword" required>

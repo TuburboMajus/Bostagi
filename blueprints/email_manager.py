@@ -29,13 +29,13 @@ email_manager_blueprint = MultiLanguageBlueprint('email_manager',__name__, load_
 @login_required
 @email_manager_blueprint.with_dictionnary
 def listEmails():
-	data = [email.to_dict() for email in Doveadm(current_app.config['domain_name']).list_dovecot_users()]
+	data = list(Doveadm(current_app.config['domain_name']).list_dovecot_users())
 	if request.args.get('fmt','html') == 'html':
 		return NormalUserTemplate(
 			Path(email_manager_blueprint.configuration["templates_folder"].format(language=g.language['code'])).joinpath("list.html"),
 			email=data
 		).handles_success_and_error().with_dictionnary().with_sidebar("emails").with_navbar().render()
-	return {"status":"ok","data":data}
+	return {"status":"ok","data":[email.to_dict() for email in data]}
 
 
 @email_manager_blueprint.route('/email',methods=["POST"])
@@ -50,7 +50,7 @@ def createEmail(form):
 	else:
 		new_box = Mailbox.generate(firstname=form['firstName'], lastname=form['lastName'])
 
-	Doveadm(current_app.config['domain_name']).generate_new_mailbox(new_box, password)
+	Doveadm(current_app.config['domain_name']).generate_new_mailbox(new_box, form['password'])
 
 	return redirect(url_for("emails.listEmails"))
 
@@ -64,7 +64,7 @@ def resetEmailPassword(form):
 
 	try:
 		mailbox = [email.to_dict() for email in Doveadm(current_app.config['domain_name']).list_dovecot_users() if email['name'] == form['username']][0]
-		Doveadm(current_app.config['domain_name']).generate_new_mailbox(mailbox, password)
+		Doveadm(current_app.config['domain_name']).generate_new_mailbox(mailbox, form['password'])
 	except:
 		pass
 

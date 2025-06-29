@@ -37,6 +37,9 @@ class Mailbox(object):
     def __repr__(self):
         return f"Mailbox {self.name} (self.uid - self.gid) at {self.home} (address = {self.address})"
 
+    def to_dict(self):
+        return {"name": self.name, "alias": self.alias, "address": self.address}
+
 
 class Doveadm(object):
 

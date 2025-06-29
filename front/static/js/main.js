@@ -2,6 +2,7 @@ const main_js_dictionary = {}
 
 function reset_password(btn){
     const modal = new bootstrap.Modal(document.getElementById('resetPasswordModal'));
+    document.getElementById('newPasswordUsername').value = btn.data.email;
     modal.show();
 }
 
@@ -147,9 +148,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         if (isValid) {
-            const modal = bootstrap.Modal.getInstance(document.getElementById('resetPasswordModal'));
-            modal.hide();
-            document.getElementById('resetPasswordForm').reset();
+            document.getElementById('newPasswordUsername').name = "username"
+            document.getElementById('newPassword').name = "password"
+            document.getElementById('confirmNewPassword').name = "confirmPassword"
+            emailForm.submit();
         }
     });
 });
